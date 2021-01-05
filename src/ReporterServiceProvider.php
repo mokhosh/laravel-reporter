@@ -12,7 +12,7 @@ class ReporterServiceProvider extends ServiceProvider
          * Optional methods to load your package assets
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-reporter');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-reporter');
+         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-reporter');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
