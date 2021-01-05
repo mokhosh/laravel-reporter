@@ -1,14 +1,11 @@
 <?php
 
-namespace Mokhosh\LaravelReporter;
+namespace Mokhosh\Reporter;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelReporterServiceProvider extends ServiceProvider
+class ReporterServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
     public function boot()
     {
         /*
@@ -44,9 +41,6 @@ class LaravelReporterServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Register the application services.
-     */
     public function register()
     {
         // Automatically apply the package configuration
@@ -54,7 +48,7 @@ class LaravelReporterServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-reporter', function () {
-            return new LaravelReporter;
+            return new Reporter;
         });
     }
 }

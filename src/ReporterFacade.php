@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Mokhosh\LaravelReporter\Skeleton\SkeletonClass
  */
-class LaravelReporterFacade extends Facade
+class ReporterFacade extends Facade
 {
     /**
      * Get the registered name of the component.
