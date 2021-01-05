@@ -21,7 +21,7 @@ composer require mokhosh/laravel-reporter
 
 ``` php
 // Ideally you would use it like this:
-$users = User::get();
+$users = User::query();
 
 Reporter::report($users)->pdf();
 Reporter::report($users)->excel();
