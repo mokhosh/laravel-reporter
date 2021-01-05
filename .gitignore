@@ -3,3 +3,9 @@ composer.lock
 docs
 vendor
 coverage
+.idea
+testdox.*
+junit.xml
+teamcity.txt
+logfile.txt
+.phpunit.result.cache
