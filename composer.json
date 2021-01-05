@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "barryvdh/laravel-snappy": "^0.4.8",
         "illuminate/support": "^6.0"
     },
     "require-dev": {
