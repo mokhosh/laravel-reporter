@@ -14,16 +14,20 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
+    <coverage includeUncoveredFiles="true"
+              processUncoveredFiles="true"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="true">
+        <include>
             <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
     <logging>
-        <log type="tap" target="build/report.tap"/>
-        <log type="junit" target="build/report.junit.xml"/>
-        <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true"/>
-        <log type="coverage-text" target="build/coverage.txt"/>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <!--<junit outputFile="junit.xml"/>-->
+        <!--<teamcity outputFile="teamcity.txt"/>-->
+        <!--<testdoxHtml outputFile="testdox.html"/>-->
+        <testdoxText outputFile="testdox.txt"/>
+        <!--<testdoxXml outputFile="testdox.xml"/>-->
+        <!--<text outputFile="logfile.txt"/>-->
     </logging>
 </phpunit>
