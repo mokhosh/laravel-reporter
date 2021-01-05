@@ -1,0 +1,53 @@
+{
+    "name": "mokhosh/laravel-reporter",
+    "description": "A simple package that lets you generate PDF and Excel reports our of Eloquent queries.",
+    "keywords": [
+        "mokhosh",
+        "laravel-reporter"
+    ],
+    "homepage": "https://github.com/mokhosh/laravel-reporter",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mo Khosh",
+            "email": "mskhoshnazar@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mokhosh\\Reporter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mokhosh\\Reporter\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mokhosh\\Reporter\\ReporterServiceProvider"
+            ],
+            "aliases": {
+                "Reporter": "Mokhosh\\Reporter\\ReporterFacade"
+            }
+        }
+    }
+}
