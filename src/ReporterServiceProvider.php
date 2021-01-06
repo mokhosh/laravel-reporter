@@ -3,6 +3,7 @@
 namespace Mokhosh\Reporter;
 
 use Illuminate\Support\ServiceProvider;
+use Mokhosh\Reporter\View\Components\Row;
 
 class ReporterServiceProvider extends ServiceProvider
 {
@@ -12,9 +13,12 @@ class ReporterServiceProvider extends ServiceProvider
          * Optional methods to load your package assets
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-reporter');
-         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-reporter');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
+         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-reporter');
+        $this->loadViewComponentsAs('laravel-reporter', [
+            Row::class,
+        ]);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
