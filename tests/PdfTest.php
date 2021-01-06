@@ -3,7 +3,6 @@
 namespace Mokhosh\Reporter\Tests;
 
 use Barryvdh\Snappy\ServiceProvider;
-use Illuminate\Foundation\Auth\User;
 use Mokhosh\Reporter\Reporter;
 use Mokhosh\Reporter\ReporterServiceProvider;
 use Orchestra\Testbench\TestCase;
@@ -28,6 +27,12 @@ class PdfTest extends TestCase
     /** @test */
     public function it_will_send_download_response_with_pdf()
     {
+        User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
+
         $users = User::query();
 
         $response = Reporter::report($users)->pdf();
@@ -39,6 +44,12 @@ class PdfTest extends TestCase
     /** @test */
     public function it_will_show_pdf_with_stream()
     {
+        User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
+
         $users = User::query();
 
         $response = Reporter::report($users)->stream()->pdf();
