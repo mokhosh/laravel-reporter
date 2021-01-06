@@ -97,7 +97,7 @@ class BaseTest extends TestCase
     }
 
     /** @test */
-    public function ir_renders_title_and_meta_to_html()
+    public function it_renders_title_and_meta_to_html()
     {
         $title = 'Title';
         $meta = ['Something' => 'Nothing'];
@@ -106,6 +106,48 @@ class BaseTest extends TestCase
 
         $this->assertStringContainsString($title, $data);
         $this->assertStringContainsString(reset($meta), $data);
+    }
+
+    /** @test */
+    public function it_interprets_simple_columns_correctly()
+    {
+        $filter = [
+            'id',
+            'name',
+            'email',
+            'created_at',
+        ];
+
+        $this->markTestIncomplete();
+    }
+
+    /** @test */
+    public function it_interprets_associative_columns_correctly()
+    {
+        $filter = [
+            'id' => 'ID',
+            'name' => 'Name',
+            'email' => 'Email',
+            'created_at' => 'Created',
+        ];
+
+        $this->markTestIncomplete();
+    }
+
+    /** @test */
+    public function it_interprets_complex_columns_correctly()
+    {
+        $filter = [
+            'id',
+            'name',
+            'email' => [
+                'transform' => fn($email) => strtolower($email),
+                'class' => 'text-green-700 bg-green-100',
+            ],
+            'created_at' => fn($date) => $date->format('Y-m'),
+        ];
+
+        $this->markTestIncomplete('just start by imagining your input columns argument, and test its outputs');
     }
 
     // test that works without passing columns
