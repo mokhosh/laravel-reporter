@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
 
 class Reporter
@@ -48,9 +49,9 @@ class Reporter
         $columns = [];
         foreach ($this->columns as $key => $value) {
             if (is_numeric($key) && is_string($value)) {
-                $columns[] = $value;
+                $columns[$value] = Str::title($value);
             } elseif (is_string($key)) {
-                $columns[] = $key;
+                $columns[$key] = $value;
             } else {
                 throw new Exception('Wrong set of columns');
             }

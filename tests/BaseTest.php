@@ -72,8 +72,8 @@ class BaseTest extends TestCase
 
         $data = Reporter::report(User::query(), columns: ['id', 'email'])->getColumns();
 
-        $this->assertContains('email', $data);
-        $this->assertNotContains('name', $data);
+        $this->assertArrayHasKey('email', $data);
+        $this->assertArrayNotHasKey('name', $data);
     }
 
     /** @test */
@@ -89,6 +89,11 @@ class BaseTest extends TestCase
 
         $this->assertStringContainsString('mskhoshnazar', $data);
         $this->assertStringNotContainsString('Mo Khosh', $data);
+
+        $data = Reporter::report(User::query(), columns: ['id', 'name', 'email'])->getHtml()->render();
+
+        $this->assertStringContainsString('mskhoshnazar', $data);
+        $this->assertStringContainsString('Mo Khosh', $data);
     }
 
     /** @test */
@@ -102,6 +107,11 @@ class BaseTest extends TestCase
         $this->assertStringContainsString($title, $data);
         $this->assertStringContainsString(reset($meta), $data);
     }
+
+    // test that works without passing columns
+    // test that gives with numeric columns too
+    // test that gives all columns correctly
+    // test that Row::formattedRow returns correct rows
 
     // todo css and styles
     // todo orientation
