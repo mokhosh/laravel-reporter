@@ -1,4 +1,3 @@
-{{--todo refactor and props--}}
 @if ($header)
 <thead>
     <tr>
