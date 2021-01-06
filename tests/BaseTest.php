@@ -3,13 +3,20 @@
 namespace Mokhosh\Reporter\Tests;
 
 use Barryvdh\Snappy\ServiceProvider;
-use Mokhosh\Reporter\ReporterServiceProvider;
-use Illuminate\Foundation\Auth\User;
-use Orchestra\Testbench\TestCase;
+use Illuminate\Foundation\Auth\User as BaseUser;
 use Mokhosh\Reporter\Reporter;
+use Mokhosh\Reporter\ReporterServiceProvider;
+use Orchestra\Testbench\TestCase;
 
 class BaseTest extends TestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations();
+    }
 
     protected function getPackageProviders($app): array
     {
@@ -28,25 +35,25 @@ class BaseTest extends TestCase
     }
 
     /** @test */
-    public function it_will_send_download_response_with_pdf()
+    public function it_contains_query_data()
     {
-        $users = User::query();
+        User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
 
-        $response = Reporter::report($users)->pdf();
+        $data = Reporter::report(User::query(), columns: ['name', 'email', 'password'])->getColumns();
 
-        $this->assertEquals($response->getStatusCode(), 200);
-        $this->assertStringContainsString('attachment', (string) $response);
+        $this->assertContains('email', $data);
+
+        $data = Reporter::report(User::query())->getColumns();
+
+        $this->assertContains('email', $data);
     }
+}
 
-    /** @test */
-    public function it_will_show_pdf_with_stream()
-    {
-        $users = User::query();
-
-        $response = Reporter::report($users)->stream()->pdf();
-
-        $this->assertEquals($response->getStatusCode(), 200);
-        $this->assertStringContainsString('inline', (string) $response);
-        $this->assertStringContainsString('application/pdf', (string) $response);
-    }
+Class User extends BaseUser
+{
+    protected $guarded = [];
 }

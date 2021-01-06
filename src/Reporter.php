@@ -2,20 +2,25 @@
 
 namespace Mokhosh\Reporter;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Schema;
+use JetBrains\PhpStorm\Pure;
 
 class Reporter
 {
-    protected bool $stream = false;
 
     public function __construct(
-        public Builder $query,
+        protected Builder $query,
+        protected array $columns = [],
+        protected bool $stream = false,
     ) {}
 
-    public static function report(Builder $query): static
+    #[Pure]
+    public static function report(Builder $query, array $columns = [], bool $stream = false): static
     {
-        return new static($query);
+        return new static($query, $columns, $stream);
     }
 
     public function pdf()
@@ -32,8 +37,34 @@ class Reporter
         return $this;
     }
 
-    protected function getData()
+    public function getColumns(): array
+    {
+        if (empty($this->columns)) return $this->getColumnsFromModel();
+
+        $columns = [];
+        foreach ($this->columns as $key => $value) {
+            if (is_numeric($key) && is_string($value)) {
+                $columns[] = $value;
+            } elseif (is_string($key)) {
+                $columns[] = $key;
+            } else {
+                throw new Exception('Wrong set of columns');
+            }
+        }
+
+        return $columns;
+    }
+
+    public function getData()
     {
         return [];
+    }
+
+    public function getColumnsFromModel(): array
+    {
+        return array_diff(
+            Schema::getColumnListing($this->query->getQuery()->from),
+            $this->query->getModel()->getHidden()
+        );
     }
 }

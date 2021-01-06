@@ -30,4 +30,7 @@
         <!--<testdoxXml outputFile="testdox.xml"/>-->
         <!--<text outputFile="logfile.txt"/>-->
     </logging>
+    <php>
+        <env name="DB_CONNECTION" value="testing"/>
+    </php>
 </phpunit>
