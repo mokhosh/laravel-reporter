@@ -84,10 +84,12 @@ class Reporter
 
     public function getHtml()
     {
+        // todo differentiate between columns and formatter?
         return View::make('laravel-reporter::pdf', [
             'query' => $this->query,
             'columns' => $this->columns,
             'title' => $this->title,
+            'meta' => $this->meta,
             'header' => $this->header,
         ]);
     }

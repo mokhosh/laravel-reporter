@@ -91,6 +91,18 @@ class BaseTest extends TestCase
         $this->assertStringNotContainsString('Mo Khosh', $data);
     }
 
+    /** @test */
+    public function ir_renders_title_and_meta_to_html()
+    {
+        $title = 'Title';
+        $meta = ['Something' => 'Nothing'];
+
+        $data = Reporter::report(User::query(), title: $title, meta: $meta)->getHtml()->render();
+
+        $this->assertStringContainsString($title, $data);
+        $this->assertStringContainsString(reset($meta), $data);
+    }
+
     // todo css and styles
     // todo orientation
     // todo limit and group

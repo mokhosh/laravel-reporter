@@ -10,7 +10,7 @@
 		<div class="wrapper">
 		    <div class="pb-5">
 			    <div class="middle pb-10 title">{{ $title }}</div>
-    			<x-laravel-reporter::meta />
+    			<x-laravel-reporter::meta :meta="$meta" />
 		    </div>
 		    <div class="content">
 		    	<table class="table">
