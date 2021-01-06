@@ -35,7 +35,7 @@ class BaseTest extends TestCase
     }
 
     /** @test */
-    public function it_contains_query_data()
+    public function it_contains_query_data_and_respects_hidden_attributes()
     {
         User::create([
             'name' => 'Mo Khosh',
@@ -43,17 +43,30 @@ class BaseTest extends TestCase
             'password' => 'password',
         ]);
 
-        $data = Reporter::report(User::query(), columns: ['name', 'email', 'password'])->getColumns();
-
-        $this->assertContains('email', $data);
-
         $data = Reporter::report(User::query())->getColumns();
 
         $this->assertContains('email', $data);
+        $this->assertNotContains('password', $data);
+    }
+
+    /** @test */
+    public function it_filters_query_data()
+    {
+        User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
+
+        $data = Reporter::report(User::query(), columns: ['id', 'email'])->getColumns();
+
+        $this->assertContains('email', $data);
+        $this->assertNotContains('name', $data);
     }
 }
 
 Class User extends BaseUser
 {
     protected $guarded = [];
+    protected $hidden = ['password'];
 }
