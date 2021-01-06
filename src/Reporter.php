@@ -87,7 +87,8 @@ class Reporter
         // todo differentiate between columns and formatter?
         return View::make('laravel-reporter::pdf', [
             'query' => $this->query,
-            'columns' => $this->columns,
+            'columns' => $this->getColumns(),
+            'modifier' => $this->columns,
             'title' => $this->title,
             'meta' => $this->meta,
             'header' => $this->header,
