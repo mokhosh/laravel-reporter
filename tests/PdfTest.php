@@ -10,6 +10,13 @@ use Orchestra\Testbench\TestCase;
 
 class PdfTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [

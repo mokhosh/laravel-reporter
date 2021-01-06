@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use JetBrains\PhpStorm\Pure;
 
 class Reporter
@@ -14,19 +15,22 @@ class Reporter
     public function __construct(
         protected Builder $query,
         protected array $columns = [],
+        protected string $title = 'Report',
+        protected array $meta = [],
+        protected bool $header = true,
         protected bool $stream = false,
     ) {}
 
     #[Pure]
-    public static function report(Builder $query, array $columns = [], bool $stream = false): static
+    public static function report(...$args): static
     {
-        return new static($query, $columns, $stream);
+        return new static(...$args);
     }
 
     public function pdf()
     {
         $snappy = App::make('snappy.pdf.wrapper');
-        $snappy->loadView('laravel-reporter::pdf', $this->getData());
+        $snappy->loadHtml($this->getHtml());
         return $this->stream ? $snappy->stream() : $snappy->download();
     }
 
@@ -66,5 +70,25 @@ class Reporter
             Schema::getColumnListing($this->query->getQuery()->from),
             $this->query->getModel()->getHidden()
         );
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getMeta(): array
+    {
+        return $this->meta;
+    }
+
+    public function getHtml()
+    {
+        return View::make('laravel-reporter::pdf', [
+            'query' => $this->query,
+            'columns' => $this->columns,
+            'title' => $this->title,
+            'header' => $this->header,
+        ]);
     }
 }
