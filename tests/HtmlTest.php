@@ -5,6 +5,7 @@ namespace Mokhosh\Reporter\Tests;
 
 
 use Mokhosh\Reporter\Reporter;
+use Mokhosh\Reporter\View\Components\Row;
 
 class HtmlTest extends BaseTest
 {
@@ -40,6 +41,51 @@ class HtmlTest extends BaseTest
         $this->assertStringContainsString(reset($meta), $data);
     }
 
-    // test that Row::formattedRow returns correct rows
+    /** @test */
+    public function it_formats_rows_correctly()
+    {
+        $user = User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
+
+        $filter = [
+            'id',
+            'name',
+            'email' => [
+                'transform' => fn($email) => strtoupper($email),
+                'class' => 'text-green-700 bg-green-100',
+                'title' => 'Email',
+            ],
+            'created_at' => fn($date) => $date->format('Y-m'),
+        ];
+
+        $columns = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $expected = [
+            0 => (object) [
+                "class" => "",
+                "title" => 1,
+            ],
+            1 => (object) [
+                "class" => "",
+                "title" => "Mo Khosh",
+            ],
+            2 => (object) [
+                "class" => "text-green-700 bg-green-100",
+                "title" => "MSKHOSHNAZAR@GMAIL.COM",
+            ],
+            3 => (object) [
+                "class" => "",
+                "title" => now()->format('Y-m'),
+            ],
+        ];
+
+        $actual = (new Row($user, $columns, isEven: false))->formattedRow();
+
+        $this->assertEquals($expected, $actual);
+    }
+
     // todo css and styles
 }
