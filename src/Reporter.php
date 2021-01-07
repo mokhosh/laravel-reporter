@@ -2,6 +2,7 @@
 
 namespace Mokhosh\Reporter;
 
+use Closure;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
@@ -44,14 +45,20 @@ class Reporter
 
     public function getColumns(): array
     {
-        if (empty($this->columns)) return $this->getColumnsFromModel();
+        if (empty($this->columns)) $this->columns = $this->getColumnsFromModel();
 
         $columns = [];
         foreach ($this->columns as $key => $value) {
             if (is_numeric($key) && is_string($value)) {
-                $columns[$value] = Str::title($value);
+                $columns[$value] = $this->getTitleFromColumnName($value);
             } elseif (is_string($key)) {
                 $columns[$key] = $value;
+                if (is_object($value) && $value instanceof Closure) $columns[$key] = ['transform' => $value];
+                if (is_array($columns[$key])) {
+                    $columns[$key]['title'] ??= $this->getTitleFromColumnName($key);
+                    $columns[$key]['class'] ??= '';
+                    $columns[$key]['transform'] = fn($a) => $a;
+                }
             } else {
                 throw new Exception('Wrong set of columns');
             }
@@ -94,5 +101,10 @@ class Reporter
             'meta' => $this->meta,
             'header' => $this->header,
         ]);
+    }
+
+    protected function getTitleFromColumnName(string $value): string
+    {
+        return (string)Str::of($value)->title()->replace('_', ' ');
     }
 }
