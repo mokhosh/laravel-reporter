@@ -50,6 +50,36 @@ $filter = [
     'created_at' => fn($date) => $date->format('Y-m'),
 ];
 Reporter::report($users, $filter)->pdf();
+
+// I'm thinking of adding header classes
+$filter = [
+    'id' => 'ID',
+    'email' => [
+        'class' => 'text-green-700 bg-green-100',
+        'header-class' => 'text-green-100 bg-green-700',
+    ],
+];
+
+// I'm also thinking of conditional classes that are added to
+// a cell when its content meets a condition passed through
+// a closure that returns a boolean
+$filter = [
+    'created_at' => [
+        'conditional-classes' => [
+            [
+                'class' => 'text-red-600',
+                'condition' => fn($date) => $date->gt(now->subWeek()),
+            ],
+            [
+                'class' => 'text-green-600',
+                'condition' => fn($date) => $date->lt(now->subYear()),
+            ],
+        ],
+    ],
+];
+
+// Another thing I have to think of a good API for is passing
+// default styles for header, and even/odd rows
 ```
 
 ### Testing
