@@ -18,7 +18,8 @@
     "require": {
         "php": "^8.0",
         "barryvdh/laravel-snappy": "^0.4.8",
-        "illuminate/support": "^8.0"
+        "illuminate/support": "^8.0",
+        "nesk/puphpeteer": "^2.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",

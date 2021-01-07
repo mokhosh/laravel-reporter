@@ -9,3 +9,4 @@ junit.xml
 teamcity.txt
 logfile.txt
 .phpunit.result.cache
+node_modules

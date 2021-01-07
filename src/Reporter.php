@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
+use Nesk\Puphpeteer\Puppeteer;
 
 class Reporter
 {
@@ -31,6 +32,14 @@ class Reporter
 
     public function pdf()
     {
+        $puppeteer = new Puppeteer;
+        $browser = $puppeteer->launch();
+        $page = $browser->newPage();
+        $page->setContent($this->getHtml());
+        $page->pdf(["path" => public_path('page.pdf')]);
+        $browser->close();
+        return response()->download(public_path("page.pdf"))->deleteFileAfterSend(true);
+
         $snappy = App::make('snappy.pdf.wrapper');
         $snappy->loadHtml($this->getHtml());
         return $this->stream ? $snappy->stream() : $snappy->download();
