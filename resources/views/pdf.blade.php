@@ -7,20 +7,19 @@
         {{--<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">--}}
     </head>
 	<body>
-		<div class="wrapper">
-		    <div class="pb-5">
-			    <div class="middle pb-10 title">{{ $title }}</div>
-    			<x-laravel-reporter::meta :meta="$meta" />
-		    </div>
-		    <div class="content">
-		    	<table class="table">
+        <div class="p-12">
+            <div class="font-bold text-2xl text-gray-700 text-center font-serif">{{ $title }}</div>
+            <x-laravel-reporter::meta :meta="$meta"/>
+
+            <div class="mt-4 rounded-lg overflow-hidden border border-gray-100">
+                <table class="w-full">
                     <x-laravel-reporter::table-header :header="$header" :columns="$columns"/>
                     @foreach($query->cursor() as $row)
                         <x-laravel-reporter-row :row="$row" :columns="$columns" :is-even="$loop->index % 2 === 0"/>
-		    		@endforeach
-		    	</table>
-			</div>
-		</div>
+                    @endforeach
+                </table>
+            </div>
+        </div>
 	    <?php
             // todo delete?
 		    if ( isset($pdf) ) {

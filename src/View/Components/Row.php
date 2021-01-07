@@ -23,7 +23,7 @@ class Row extends Component
             $columns[] = (object) [
                 'class' => is_array($modifier)
                     ? $modifier['class']
-                    : '',
+                    : 'px-2 py-1',
                 'title' => is_array($modifier)
                     ? $modifier['transform']($this->row->{$title})
                     : $this->row->{$title},

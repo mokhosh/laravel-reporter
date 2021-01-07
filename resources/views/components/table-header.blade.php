@@ -5,7 +5,7 @@
             @if (is_array($modifier))
                 <th class="{{ $modifier['class'] }}">{{ $modifier['title'] }}</th>
             @else
-                <th class="left">{{ $modifier }}</th>
+                <th class="p-2 bg-gray-300 text-gray-600 text-left">{{ $modifier }}</th>
             @endif
         @endforeach
     </tr>
