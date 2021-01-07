@@ -20,16 +20,17 @@ composer require mokhosh/laravel-reporter
 ## Usage
 
 ``` php
-// Ideally you would use it like this:
+// This is the simplest form of using it.
+// This will report all non-hidden columns
+// with Title Case column names:
 $users = User::query();
+Reporter::report($users)->pdf(); // download
+Reporter::report($users)->stream()->pdf(); // view in browser, aka stream
 
-Reporter::report($users)->pdf();
+// Hopefully we'll add excel exports as well
 Reporter::report($users)->excel();
 
-// Hopefully you'll be able to stream the pdf like so
-Reporter::report($users)->stream()->pdf();
-
-// And you'll be able to filter or style the report like this
+// You can filter the columns like this
 $filter = [
     'id',
     'name',
@@ -38,11 +39,12 @@ $filter = [
 ];
 Reporter::report($users, $filter)->pdf();
 
+// Or even transform the data and add Tailwindcss classes
 $filter = [
-    'id',
+    'id' => 'ID',
     'name',
     'email' => [
-        'transform' => fn($email) => strtolower($email),
+        'transform' => fn($email) => strtoupper($email),
         'class' => 'text-green-700 bg-green-100',
     ],
     'created_at' => fn($date) => $date->format('Y-m'),
