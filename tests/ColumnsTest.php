@@ -19,8 +19,8 @@ class ColumnsTest extends BaseTest
 
         $data = Reporter::report(User::query())->getColumns();
 
-        $this->assertContains('email', $data);
-        $this->assertNotContains('password', $data);
+        $this->assertArrayHasKey('email', $data);
+        $this->assertArrayNotHasKey('password', $data);
     }
 
     /** @test */
@@ -49,7 +49,16 @@ class ColumnsTest extends BaseTest
             'created_at',
         ];
 
-        $this->markTestIncomplete();
+        $expected = [
+            'id' => 'Id',
+            'name' => 'Name',
+            'email' => 'Email',
+            'created_at' => 'Created At',
+        ];
+
+        $actual = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $this->assertEquals($expected, $actual);
     }
 
     /** @test */
@@ -62,7 +71,9 @@ class ColumnsTest extends BaseTest
             'created_at' => 'Created',
         ];
 
-        $this->markTestIncomplete();
+        $actual = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $this->assertEquals($filter, $actual);
     }
 
     /** @test */
@@ -78,10 +89,49 @@ class ColumnsTest extends BaseTest
             'created_at' => fn($date) => $date->format('Y-m'),
         ];
 
-        $this->markTestIncomplete('just start by imagining your input columns argument, and test its outputs');
-    }
+        $expected = [
+            'id' => 'Id',
+            'name' => 'Name',
+            'email' => [
+                'title' => 'Email',
+                'transform' => fn($email) => strtolower($email),
+                'class' => 'text-green-700 bg-green-100',
+            ],
+            'created_at' => [
+                'title' => 'Created At',
+                'transform' => fn($date) => $date->format('Y-m'),
+                'class' => '',
+            ],
+        ];
 
-    // test that works without passing columns
-    // test that gives with numeric columns too
-    // test that gives all columns correctly
+        $actual = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $this->assertEquals($expected, $actual);
+
+        $filter = [
+            'id' => 'ID',
+            'name',
+            'email' => ['title' => '@'],
+            'created_at' => fn($date) => $date->format('Y-m'),
+        ];
+
+        $expected = [
+            'id' => 'ID',
+            'name' => 'Name',
+            'email' => [
+                'title' => '@',
+                'transform' => fn($email) => $email,
+                'class' => '',
+            ],
+            'created_at' => [
+                'title' => 'Created At',
+                'transform' => fn($date) => $date->format('Y-m'),
+                'class' => '',
+            ],
+        ];
+
+        $actual = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $this->assertEquals($expected, $actual);
+    }
 }
