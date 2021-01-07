@@ -57,7 +57,7 @@ class Reporter
                 if (is_array($columns[$key])) {
                     $columns[$key]['title'] ??= $this->getTitleFromColumnName($key);
                     $columns[$key]['class'] ??= '';
-                    $columns[$key]['transform'] = fn($a) => $a;
+                    $columns[$key]['transform'] ??= fn($a) => $a;
                 }
             } else {
                 throw new Exception('Wrong set of columns');
