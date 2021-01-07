@@ -2,10 +2,10 @@
 <thead>
     <tr>
         @foreach ($columns as $title => $modifier)
-            @if (is_array($modifier) && array_key_exists('class', $modifier))
-                <th class="{{ $modifier['class'] }}">{{ $title }}</th>
+            @if (is_array($modifier))
+                <th class="{{ $modifier['class'] }}">{{ $modifier['title'] }}</th>
             @else
-                <th class="left">{{ $title }}</th>
+                <th class="left">{{ $modifier }}</th>
             @endif
         @endforeach
     </tr>
