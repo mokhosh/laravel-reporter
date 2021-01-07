@@ -15,29 +15,22 @@ class Row extends Component
         public bool $isEven,
     ) {}
 
-    public function formattedRow(): object
+    public function formattedRow(): array
     {
+        $columns = [];
+
         foreach ($this->columns as $title => $modifier) {
-            $columns = [];
-            $class = $this->isEven ? 'even-classes ' : 'odd-classes ';
-
-            if (is_object($modifier) && $modifier instanceof Closure) {
-                $columns[$title] = $modifier($this->row);
-            } else if (is_string($modifier)) {
-                $columns[$title] = $this->row->{$modifier};
-            } else if (is_array($modifier)) {
-                $class .= $modifier['class'] ?? '';
-
-                if (isset($modifier['transform'])) {
-                    $columns[$title] = $modifier['transform']($this->row);
-                }
-            }
+            $columns[] = (object) [
+                'class' => is_array($modifier)
+                    ? $modifier['class']
+                    : '',
+                'title' => is_array($modifier)
+                    ? $modifier['transform']($this->row->{$title})
+                    : $this->row->{$title},
+            ];
         }
 
-        return (object) [
-            'columns' => $columns ?? null,
-            'class' => $class ?? null,
-        ];
+        return $columns;
     }
 
     public function render(): View

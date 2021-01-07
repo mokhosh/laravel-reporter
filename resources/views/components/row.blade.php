@@ -1,5 +1,6 @@
-<tr class="{{ $formattedRow->class }}">
-    @foreach($formattedRow->columns as $column)
-        <td>{{ $column }}</td>
+{{-- todo config or something for even/odd classes? --}}
+<tr class="{{ $isEven ? 'even-classes' : 'odd-classes' }}">
+    @foreach($formattedRow as $column)
+        <td class="{{ $column->class }}">{{ $column->title }}</td>
     @endforeach
 </tr>
