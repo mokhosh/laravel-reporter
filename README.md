@@ -25,11 +25,8 @@ php artisan reporter:install
 // This will report all non-hidden columns
 // with Title Case column names:
 $users = User::query();
-Reporter::report($users)->pdf(); // download
-Reporter::report($users)->stream()->pdf(); // view in browser, aka stream
-
-// Hopefully we'll add excel exports as well
-Reporter::report($users)->excel();
+Reporter::report($users)->pdf(); // view in browser, aka inline
+Reporter::report($users)->download()->pdf(); // download, aka attachment
 
 // You can filter the columns like this
 $filter = [
@@ -51,6 +48,17 @@ $filter = [
     'created_at' => fn($date) => $date->format('Y-m'),
 ];
 Reporter::report($users, $filter)->pdf();
+
+// You can also change the Title of the generated pdf and add metadata
+$title = 'Users Report';
+$meta = [
+    'Admin' => 'Mo Khosh',
+];
+
+Reporter::report($query, $columns, $title, $meta)->pdf();
+
+// Hopefully we'll add excel exports as well
+Reporter::report($users)->excel();
 
 // I'm thinking of adding header classes
 $filter = [
