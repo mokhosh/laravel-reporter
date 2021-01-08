@@ -5,11 +5,11 @@ namespace Mokhosh\Reporter;
 use Closure;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
+use Nesk\Puphpeteer\Puppeteer;
 
 class Reporter
 {
@@ -31,9 +31,13 @@ class Reporter
 
     public function pdf()
     {
-        $snappy = App::make('snappy.pdf.wrapper');
-        $snappy->loadHtml($this->getHtml());
-        return $this->download ? $snappy->download() : $snappy->inline();
+        $browser = (new Puppeteer)->launch();
+        $page = $browser->newPage();
+        $page->setContent($this->getHtml());
+        $page->pdf(["path" => $path = storage_path('tmp-report.pdf')]);
+        $browser->close();
+
+        return response()->{ $this-> download ? 'download' : 'file'}($path)->deleteFileAfterSend(true);
     }
 
     public function download($download = true): static
@@ -90,9 +94,9 @@ class Reporter
         return $this->meta;
     }
 
-    public function getHtml()
+    public function getHtml(): string
     {
-        return View::make('laravel-reporter::pdf', [
+        return (string) View::make('laravel-reporter::pdf', [
             'query' => $this->query,
             'columns' => $this->getColumns(),
             'title' => $this->title,
