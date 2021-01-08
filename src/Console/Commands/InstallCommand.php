@@ -12,6 +12,10 @@ class InstallCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
+        if (file_exists(base_path('node_modules/@nesk'))) {
+            $this->setHidden(true);
+        }
     }
 
     public function handle()
