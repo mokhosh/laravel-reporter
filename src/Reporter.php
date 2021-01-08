@@ -67,11 +67,6 @@ class Reporter
         return $columns;
     }
 
-    public function getData()
-    {
-        return [];
-    }
-
     public function getColumnsFromModel(): array
     {
         return array_diff(
