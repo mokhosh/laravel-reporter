@@ -17,16 +17,22 @@ php artisan reporter:install
 ```
 
 ## Usage
+This is the simplest way to get a PDF. This will report all non-hidden columns:
 
-``` php
-// This is the simplest form of using it.
-// This will report all non-hidden columns
-// with Title Case column names:
+```php
+use Mokhosh\Reporter\Reporter;
+
 $users = User::query();
-Reporter::report($users)->pdf(); // view in browser, aka inline
-Reporter::report($users)->download()->pdf(); // download, aka attachment
 
-// You can filter the columns like this
+Reporter::report($users)->pdf(); // view in browser, aka inline
+```
+If you prefer to download the PDF file instead of showing it in the browser you can do this:
+```php
+Reporter::report($users)->download()->pdf(); // download, aka attachment
+```
+### Styles and Transforms
+You can filter the columns like this
+```php
 $filter = [
     'id',
     'name',
@@ -34,8 +40,31 @@ $filter = [
     'created_at',
 ];
 Reporter::report($users, $filter)->pdf();
-
-// Or even transform the data and add Tailwindcss classes
+```
+That will use a Title Case version of column names for your table headers. If you wish to use custom table headers you can do so like this:
+```php
+$filter = [
+    'id' => 'ID',
+    'email' => '@',
+    'created_at' => 'Joined',
+];
+```
+You can also transform the data by passing a closure:
+```php
+$filter = [
+    'created_at' => fn($date) => $date->format('Y-m'),
+];
+```
+You can add Tailwind CSS classes to your table cells if you want. Cool, right?
+```php
+$filter = [
+    'id' => [
+        'class' => 'font-bold text-gray-600 bg-gray-50'
+    ],
+];
+```
+You can also mix and match in a million ways:
+```php
 $filter = [
     'id' => 'ID',
     'name',
@@ -44,21 +73,28 @@ $filter = [
         'class' => 'text-green-700 bg-green-100',
     ],
     'created_at' => fn($date) => $date->format('Y-m'),
+    'updated_at' => [
+        'title' => 'Last Seen',
+        'class' => 'text-red-400',
+    ],
 ];
-Reporter::report($users, $filter)->pdf();
-
-// You can also change the Title of the generated pdf and add metadata
+````
+You can also change the Title of the generated pdf and add metadata
+```php
 $title = 'Users Report';
 $meta = [
     'Admin' => 'Mo Khosh',
 ];
 
 Reporter::report($query, $columns, $title, $meta)->pdf();
-
-// Hopefully we'll add excel exports as well
+```
+## TODO
+- [ ] Hopefully we'll add excel exports as well
+```php
 Reporter::report($users)->excel();
-
-// I'm thinking of adding header classes
+```
+- [ ] I'm thinking of adding header classes
+```php
 $filter = [
     'id' => 'ID',
     'email' => [
@@ -66,28 +102,25 @@ $filter = [
         'header-class' => 'text-green-100 bg-green-700',
     ],
 ];
-
-// I'm also thinking of conditional classes that are added to
-// a cell when its content meets a condition passed through
-// a closure that returns a boolean
+```
+I'm also thinking of conditional classes that are added to a cell when its content meets a condition passed through a closure that returns a boolean value.
+```php
 $filter = [
     'created_at' => [
         'conditional-classes' => [
             [
                 'class' => 'text-red-600',
-                'condition' => fn($date) => $date->gt(now->subWeek()),
+                'condition' => fn($date) => $date->gt(now()->subWeek()),
             ],
             [
                 'class' => 'text-green-600',
-                'condition' => fn($date) => $date->lt(now->subYear()),
+                'condition' => fn($date) => $date->lt(now()->subYear()),
             ],
         ],
     ],
 ];
-
-// Another thing I have to think of a good API for is passing
-// default styles for header, and even/odd rows
 ```
+Another thing I have to think of a good API for is passing default styles for the table header, and even/odd rows
 
 ### Testing
 
