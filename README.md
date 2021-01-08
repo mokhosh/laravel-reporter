@@ -120,7 +120,8 @@ $filter = [
     ],
 ];
 ```
-Another thing I have to think of a good API for is passing default styles for the table header, and even/odd rows
+- [ ] A good API for is passing default styles for the table header, and even/odd rows
+- [ ] Add headers and footers with page number, date, etc.
 
 ### Testing
 
