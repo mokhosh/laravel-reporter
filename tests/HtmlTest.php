@@ -18,12 +18,12 @@ class HtmlTest extends BaseTest
             'password' => 'password',
         ]);
 
-        $data = Reporter::report(User::query(), columns: ['id', 'email'])->getHtml()->render();
+        $data = Reporter::report(User::query(), columns: ['id', 'email'])->getHtml();
 
         $this->assertStringContainsString('mskhoshnazar', $data);
         $this->assertStringNotContainsString('Mo Khosh', $data);
 
-        $data = Reporter::report(User::query(), columns: ['id', 'name', 'email'])->getHtml()->render();
+        $data = Reporter::report(User::query(), columns: ['id', 'name', 'email'])->getHtml();
 
         $this->assertStringContainsString('mskhoshnazar', $data);
         $this->assertStringContainsString('Mo Khosh', $data);
@@ -35,7 +35,7 @@ class HtmlTest extends BaseTest
         $title = 'Title';
         $meta = ['Something' => 'Nothing'];
 
-        $data = Reporter::report(User::query(), title: $title, meta: $meta)->getHtml()->render();
+        $data = Reporter::report(User::query(), title: $title, meta: $meta)->getHtml();
 
         $this->assertStringContainsString($title, $data);
         $this->assertStringContainsString(reset($meta), $data);

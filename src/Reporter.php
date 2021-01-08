@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
+use Mokhosh\Reporter\Services\PdfService;
 use Nesk\Puphpeteer\Puppeteer;
 
 class Reporter
@@ -31,13 +32,8 @@ class Reporter
 
     public function pdf()
     {
-        $browser = (new Puppeteer)->launch();
-        $page = $browser->newPage();
-        $page->setContent($this->getHtml());
-        $page->pdf(["path" => $path = storage_path('tmp-report.pdf')]);
-        $browser->close();
-
-        return response()->{ $this-> download ? 'download' : 'file'}($path)->deleteFileAfterSend(true);
+        $service = new PdfService($this->getHtml());
+        return $this->download ? $service->download() : $service->inline();
     }
 
     public function download($download = true): static
@@ -96,13 +92,13 @@ class Reporter
 
     public function getHtml(): string
     {
-        return (string) View::make('laravel-reporter::pdf', [
+        return View::make('laravel-reporter::pdf', [
             'query' => $this->query,
             'columns' => $this->getColumns(),
             'title' => $this->title,
             'meta' => $this->meta,
             'header' => $this->header,
-        ]);
+        ])->render();
     }
 
     protected function getTitleFromColumnName(string $value): string
