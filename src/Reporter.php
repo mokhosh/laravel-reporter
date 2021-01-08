@@ -35,8 +35,12 @@ class Reporter
         $puppeteer = new Puppeteer;
         $browser = $puppeteer->launch();
         $page = $browser->newPage();
-        $page->setContent($this->getHtml());
-        $page->pdf(["path" => public_path('page.pdf')]);
+//        $page->setContent($this->getHtml());
+//        $page->pdf(["path" => public_path('page.pdf')]);
+
+        $page->goto('https://google.com');
+        $page->screenshot(['path' => public_path('example.png')]);
+
         $browser->close();
         return response()->download(public_path("page.pdf"))->deleteFileAfterSend(true);
 
