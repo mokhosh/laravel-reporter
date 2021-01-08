@@ -1,8 +1,6 @@
 # Create PDF and Excel reports in Laravel and style them with Tailwind CSS
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mokhosh/laravel-reporter.svg?style=flat-square)](https://packagist.org/packages/mokhosh/laravel-reporter)
-[![Build Status](https://img.shields.io/travis/mokhosh/laravel-reporter/master.svg?style=flat-square)](https://travis-ci.org/mokhosh/laravel-reporter)
-[![Quality Score](https://img.shields.io/scrutinizer/g/mokhosh/laravel-reporter.svg?style=flat-square)](https://scrutinizer-ci.com/g/mokhosh/laravel-reporter)
 [![Total Downloads](https://img.shields.io/packagist/dt/mokhosh/laravel-reporter.svg?style=flat-square)](https://packagist.org/packages/mokhosh/laravel-reporter)
 
 This is basically going to be a wrapper for an Excel generator and a Pdf generator. For the time being these generators are Maatweb and Barry's snappy, that might change in the future.
