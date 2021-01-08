@@ -11,10 +11,11 @@ There is already a package that does this, but I didn't like the API, the coding
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via composer. Make sure to run the Artisan install command to install npm dependencies.
 
 ```bash
 composer require mokhosh/laravel-reporter
+php artisan reporter:install
 ```
 
 ## Usage
