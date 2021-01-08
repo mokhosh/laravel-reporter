@@ -1,6 +1,6 @@
 {
     "name": "mokhosh/laravel-reporter",
-    "description": "A simple package that lets you generate PDF and Excel reports our of Eloquent queries.",
+    "description": "Create PDF and Excel reports in Laravel and style them with Tailwind CSS.",
     "keywords": [
         "mokhosh",
         "laravel-reporter"

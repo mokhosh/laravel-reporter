@@ -1,4 +1,4 @@
-# Create Pdf and Excel reports in Laravel
+# Create PDF and Excel reports in Laravel and style them with Tailwind CSS
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mokhosh/laravel-reporter.svg?style=flat-square)](https://packagist.org/packages/mokhosh/laravel-reporter)
 [![Build Status](https://img.shields.io/travis/mokhosh/laravel-reporter/master.svg?style=flat-square)](https://travis-ci.org/mokhosh/laravel-reporter)
