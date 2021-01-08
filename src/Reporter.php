@@ -20,7 +20,7 @@ class Reporter
         protected string $title = 'Report',
         protected array $meta = [],
         protected bool $header = true,
-        protected bool $stream = false,
+        protected bool $download = false,
     ) {}
 
     #[Pure]
@@ -33,12 +33,12 @@ class Reporter
     {
         $snappy = App::make('snappy.pdf.wrapper');
         $snappy->loadHtml($this->getHtml());
-        return $this->stream ? $snappy->stream() : $snappy->download();
+        return $this->download ? $snappy->download() : $snappy->inline();
     }
 
-    public function stream($stream = true): static
+    public function download($download = true): static
     {
-        $this->stream = $stream;
+        $this->download = $download;
 
         return $this;
     }
