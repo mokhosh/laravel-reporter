@@ -32,17 +32,12 @@ class Reporter
 
     public function pdf()
     {
-        $puppeteer = new Puppeteer;
-        $browser = $puppeteer->launch();
+        $browser = (new Puppeteer)->launch();
         $page = $browser->newPage();
         $page->setContent($this->getHtml());
-        $page->pdf(["path" => public_path('page.pdf')]);
+        $page->pdf(["path" => storage_path('tmp-report.pdf')]);
         $browser->close();
-        return response()->download(public_path("page.pdf"))->deleteFileAfterSend(true);
-
-        $snappy = App::make('snappy.pdf.wrapper');
-        $snappy->loadHtml($this->getHtml());
-        return $this->stream ? $snappy->stream() : $snappy->download();
+        return response()->download(storage_path("tmp-report.pdf"))->deleteFileAfterSend(true);
     }
 
     public function stream($stream = true): static
@@ -99,9 +94,9 @@ class Reporter
         return $this->meta;
     }
 
-    public function getHtml()
+    public function getHtml(): string
     {
-        return View::make('laravel-reporter::pdf', [
+        return (string) View::make('laravel-reporter::pdf', [
             'query' => $this->query,
             'columns' => $this->getColumns(),
             'title' => $this->title,
