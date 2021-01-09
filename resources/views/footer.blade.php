@@ -1,4 +1,4 @@
-<x-laravel-reporter::tailwind/>
+<style>@import "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css";</style>
 <div class="flex justify-between p-12 text-lg">
     <div class="date"></div>
     <div>
