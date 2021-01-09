@@ -11,7 +11,7 @@
         <x-laravel-reporter::meta :meta="$meta"/>
 
         <div class="mt-4 rounded-lg overflow-hidden border border-gray-100">
-            <table class="w-full">
+            <table class="w-full text-sm">
                 <x-laravel-reporter::table-header :header="$header" :columns="$columns"/>
                 @foreach($query->cursor() as $row)
                     <x-laravel-reporter-row :row="$row" :columns="$columns" :is-even="$loop->index % 2 === 0"/>
