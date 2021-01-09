@@ -6,12 +6,15 @@
         color: #455667;
         width: 100%;
         margin: 0 48px;
-
+    }
+    .flex {
         display: flex;
+    }
+    .justify-between {
         justify-content: space-between;
     }
 </style>
-<div class="footer">
+<div class="footer flex justify-between">
     <div class="date"></div>
     <div class="flex">
         <div class="pageNumber"></div>
