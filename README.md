@@ -24,11 +24,11 @@ use Mokhosh\Reporter\Reporter;
 
 $users = User::query();
 
-Reporter::report($users)->pdf(); // view in browser, aka inline
+return Reporter::report($users)->pdf(); // view in browser, aka inline
 ```
 If you prefer to download the PDF file instead of showing it in the browser you can do this:
 ```php
-Reporter::report($users)->download()->pdf(); // download, aka attachment
+return Reporter::report($users)->download()->pdf(); // download, aka attachment
 ```
 ### Styles and Transforms
 You can filter the columns like this
@@ -39,7 +39,7 @@ $filter = [
     'email',
     'created_at',
 ];
-Reporter::report($users, $filter)->pdf();
+return Reporter::report($users, $filter)->pdf();
 ```
 That will use a Title Case version of column names for your table headers. If you wish to use custom table headers you can do so like this:
 ```php
@@ -86,12 +86,12 @@ $meta = [
     'Admin' => 'Mo Khosh',
 ];
 
-Reporter::report($query, $columns, $title, $meta, footer: true)->pdf();
+return Reporter::report($query, $columns, $title, $meta, footer: true)->pdf();
 ```
 ## TODO
 - [ ] Hopefully we'll add excel exports as well
 ```php
-Reporter::report($users)->excel();
+return Reporter::report($users)->excel();
 ```
 - [ ] I'm thinking of adding header classes
 ```php
