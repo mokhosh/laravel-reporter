@@ -5,19 +5,13 @@
         font-size: 8px;
         color: #455667;
         width: 100%;
-        margin: 48px;
-    }
-    .flex {
+        margin: 0 48px;
+
         display: flex;
-    }
-    .justify-between {
         justify-content: space-between;
     }
-    .p-12 {
-        padding: 4rem;
-    }
 </style>
-<div class="footer flex justify-between p-12 text-lg">
+<div class="footer">
     <div class="date"></div>
     <div class="flex">
         <div class="pageNumber"></div>
