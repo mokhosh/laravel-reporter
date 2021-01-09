@@ -16,7 +16,16 @@ class PdfService
         $browser = (new Puppeteer)->launch();
         $page = $browser->newPage();
         $page->setContent($this->html);
-        $page->pdf(["path" => storage_path($filename)]);
+        $page->pdf([
+            'path' => storage_path($filename),
+            'format' => 'a4',
+            'margin' => [
+                'top' => '36px',
+                'right' => '36px',
+                'bottom' => '36px',
+                'left' => '36px',
+            ],
+        ]);
         $browser->close();
 
         return storage_path($filename);
