@@ -79,14 +79,14 @@ $filter = [
     ],
 ];
 ````
-You can also change the Title of the generated pdf and add metadata
+You can also change the Title of the generated pdf and add metadata and footer
 ```php
 $title = 'Users Report';
 $meta = [
     'Admin' => 'Mo Khosh',
 ];
 
-Reporter::report($query, $columns, $title, $meta)->pdf();
+Reporter::report($query, $columns, $title, $meta, footer: true)->pdf();
 ```
 ## TODO
 - [ ] Hopefully we'll add excel exports as well

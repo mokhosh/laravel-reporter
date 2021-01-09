@@ -6,19 +6,16 @@
         color: #455667;
         width: 100%;
         margin: 0 48px;
-    }
-    .flex {
         display: flex;
-    }
-    .justify-between {
         justify-content: space-between;
     }
 </style>
-<div class="footer flex justify-between">
+<div class="footer">
     <div class="date"></div>
-    <div class="flex">
-        <div class="pageNumber"></div>
-        <div> / </div>
-        <div class="totalPages"></div>
+    <div>
+        <span>Page</span>
+        <span class="pageNumber"></span>
+        <span>/</span>
+        <span class="totalPages"></span>
     </div>
 </div>

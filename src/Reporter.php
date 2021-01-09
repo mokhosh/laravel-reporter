@@ -21,6 +21,7 @@ class Reporter
         protected array $meta = [],
         protected bool $header = true,
         protected bool $download = false,
+        protected bool $footer = false,
     ) {}
 
     #[Pure]
@@ -110,7 +111,7 @@ class Reporter
                 'bottom' => '56px',
                 'left' => '36px',
             ],
-            'displayHeaderFooter' => true,
+            'displayHeaderFooter' => $this->footer,
             'footerTemplate' => $this->getFooterTemplate(),
             'headerTemplate' => '<span></span>',
         ];
