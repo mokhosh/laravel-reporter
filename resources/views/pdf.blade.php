@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
         <title>{{ $title }}</title>
-        <x-tailwind/>
+        <x-laravel-reporter::tailwind/>
         <style>html{-webkit-print-color-adjust:exact}</style>
     </head>
 	<body>

@@ -1,4 +1,4 @@
-<x-tailwind/>
+<x-laravel-reporter::tailwind/>
 <div class="flex justify-between p-12 text-lg">
     <div class="date"></div>
     <div>
