@@ -5,7 +5,7 @@
         font-size: 8px;
         color: #455667;
         width: 100%;
-        padding: 48px;
+        margin: 48px;
     }
     .flex {
         display: flex;
