@@ -1,4 +1,4 @@
-<div class="flex justify-between">
+<div class="flex justify-between p-12 text-lg">
     <div class="date"></div>
     <div>
         <div class="pageNumber"></div>
