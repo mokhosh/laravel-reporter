@@ -112,7 +112,7 @@ class Reporter
             ],
             'displayHeaderFooter' => true,
             'footerTemplate' => $this->getFooterTemplate(),
-            'headerTemplate' => $this->getFooterTemplate(),
+            'headerTemplate' => '',
         ];
     }
 
