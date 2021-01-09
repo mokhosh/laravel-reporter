@@ -9,23 +9,17 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PdfService
 {
-    public function __construct(public string $html) {}
+    public function __construct(
+        protected string $html,
+        protected array $options = [],
+    ) {}
 
-    public function createPdf($filename = 'tmp-report.pdf'): string
+    public function createPdf(string $filename = 'tmp-report.pdf'): string
     {
         $browser = (new Puppeteer)->launch();
         $page = $browser->newPage();
         $page->setContent($this->html);
-        $page->pdf([
-            'path' => storage_path($filename),
-            'format' => 'a4',
-            'margin' => [
-                'top' => '36px',
-                'right' => '36px',
-                'bottom' => '36px',
-                'left' => '36px',
-            ],
-        ]);
+        $page->pdf(array_merge($this->options, ['path' => storage_path($filename)]));
         $browser->close();
 
         return storage_path($filename);

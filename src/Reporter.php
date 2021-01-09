@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
 use Mokhosh\Reporter\Services\PdfService;
-use Nesk\Puphpeteer\Puppeteer;
 
 class Reporter
 {
@@ -32,7 +31,7 @@ class Reporter
 
     public function pdf()
     {
-        $service = new PdfService($this->getHtml());
+        $service = new PdfService($this->getHtml(), $this->getOptions());
         return $this->download ? $service->download() : $service->inline();
     }
 
@@ -99,5 +98,25 @@ class Reporter
     protected function getTitleFromColumnName(string $value): string
     {
         return (string)Str::of($value)->title()->replace('_', ' ');
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'format' => 'a4',
+            'margin' => [
+                'top' => '36px',
+                'right' => '36px',
+                'bottom' => '36px',
+                'left' => '36px',
+            ],
+            'displayHeaderFooter' => true,
+            'footerTemplate' => $this->getFooterTemplate(),
+        ];
+    }
+
+    protected function getFooterTemplate(): string
+    {
+        return View::make('laravel-reporter::footer')->render();
     }
 }
