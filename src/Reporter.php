@@ -107,12 +107,12 @@ class Reporter
             'margin' => [
                 'top' => '36px',
                 'right' => '36px',
-                'bottom' => '36px',
+                'bottom' => '56px',
                 'left' => '36px',
             ],
             'displayHeaderFooter' => true,
             'footerTemplate' => $this->getFooterTemplate(),
-            'headerTemplate' => '',
+            'headerTemplate' => '<span></span>',
         ];
     }
 
