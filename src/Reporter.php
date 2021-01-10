@@ -33,7 +33,7 @@ class Reporter
 
     public function pdf()
     {
-        $service = new PdfService($this->getHtml(), $this->getOptions());
+        $service = new PdfService(html: $this->getHtml(), filename: $this->getFileName(), options: $this->getOptions());
         return $this->download ? $service->download() : $service->inline();
     }
 
@@ -122,5 +122,16 @@ class Reporter
     protected function getFooterTemplate(): string
     {
         return View::make('laravel-reporter::footer')->render();
+    }
+
+    public function getFileName()
+    {
+        $fileName = $this->title;
+
+        foreach ($this->meta as $key => $value) {
+            $fileName = $fileName.' '. $key.' '.$value;
+        }
+
+        return Str::kebab($fileName);
     }
 }

@@ -11,33 +11,34 @@ class PdfService
 {
     public function __construct(
         protected string $html,
+        protected string $filename,
         protected array $options = [],
     ) {}
 
-    public function createPdf(string $filename = 'tmp-report.pdf'): string
+    public function createPdf(): string
     {
         $browser = (new Puppeteer)->launch();
         $page = $browser->newPage();
         $page->setContent($this->html);
-        $page->pdf(array_merge($this->options, ['path' => storage_path($filename)]));
+        $page->pdf(array_merge($this->options, ['path' => storage_path($this->filename)]));
         $browser->close();
 
-        return storage_path($filename);
+        return storage_path($this->filename);
     }
 
-    public function download($filename = 'tmp-report.pdf'): BinaryFileResponse
+    public function download(): BinaryFileResponse
     {
-        return response()->download($this->createPdf($filename), $filename, [
+        return response()->download($this->createPdf(), $this->filename, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' =>  'attachment; filename="'.$filename.'"'
+            'Content-Disposition' =>  'attachment; filename="'.$this->filename.'"'
         ])->deleteFileAfterSend(true);
     }
 
-    public function inline($filename = 'tmp-report.pdf'): BinaryFileResponse
+    public function inline(): BinaryFileResponse
     {
-        return response()->file($this->createPdf($filename), [
+        return response()->file($this->createPdf(), [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' =>  'inline; filename="'.$filename.'"'
+            'Content-Disposition' =>  'inline; filename="'.$this->filename.'"'
         ])->deleteFileAfterSend(true);
     }
 }
