@@ -13,7 +13,9 @@ class PdfService
         protected string $html,
         protected string $filename,
         protected array $options = [],
-    ) {}
+    ) {
+        $this->filename = $this->filename.'.pdf';
+    }
 
     public function createPdf(): string
     {
@@ -40,5 +42,10 @@ class PdfService
             'Content-Type' => 'application/pdf',
             'Content-Disposition' =>  'inline; filename="'.$this->filename.'"'
         ])->deleteFileAfterSend(true);
+    }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
     }
 }

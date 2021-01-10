@@ -5,6 +5,7 @@ namespace Mokhosh\Reporter\Tests;
 use Barryvdh\Snappy\ServiceProvider;
 use Mokhosh\Reporter\Reporter;
 use Mokhosh\Reporter\ReporterServiceProvider;
+use Mokhosh\Reporter\Services\PdfService;
 use Orchestra\Testbench\TestCase;
 
 class PdfTest extends TestCase
@@ -62,5 +63,13 @@ class PdfTest extends TestCase
         $this->assertEquals($response->getStatusCode(), 200);
         $this->assertStringContainsString('inline', (string) $response);
         $this->assertStringContainsString('application/pdf', (string) $response);
+    }
+
+    /** @test */
+    public function it_will_name_files_with_correct_extension()
+    {
+        $service = new PdfService(html: '<div></div>', filename: 'some-file-name');
+
+        $this->assertEquals('some-file-name.pdf', $service->getFilename());
     }
 }
