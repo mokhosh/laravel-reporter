@@ -87,5 +87,12 @@ class HtmlTest extends BaseTest
         $this->assertEquals($expected, $actual);
     }
 
-    // todo css and styles
+    /** @test */
+    public function it_renders_logo()
+    {
+        $html = Reporter::report(User::query(), logo: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png')->getHtml();
+
+        $this->assertStringContainsString('<img', $html);
+        $this->assertStringContainsString('google.com/images', $html);
+    }
 }

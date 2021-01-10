@@ -19,9 +19,10 @@ class Reporter
         protected array $columns = [],
         protected string $title = 'Report',
         protected array $meta = [],
+        protected ?string $logo = null,
         protected bool $header = true,
-        protected bool $download = false,
         protected bool $footer = false,
+        protected bool $download = false,
     ) {}
 
     #[Pure]
@@ -92,6 +93,7 @@ class Reporter
             'columns' => $this->getColumns(),
             'title' => $this->title,
             'meta' => $this->meta,
+            'logo' => $this->logo,
             'header' => $this->header,
         ])->render();
     }
