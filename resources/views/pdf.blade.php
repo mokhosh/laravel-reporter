@@ -9,7 +9,7 @@
 	<body>
         <div class="flex justify-between">
             @if(! is_null($logo))
-                <img src="{{ $logo }}" class="h-12">
+                <img src="{{ $logo }}" class="h-8">
             @endif
             <div class="font-bold text-2xl text-gray-700 text-center font-serif">{{ $title }}</div>
         </div>
