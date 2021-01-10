@@ -79,7 +79,7 @@ $filter = [
     ],
 ];
 ````
-You can also change the Title of the generated pdf and add metadata and footer
+You can also change the Title of the generated pdf and add metadata
 ```php
 $title = 'Users Report';
 $meta = [
@@ -87,6 +87,14 @@ $meta = [
 ];
 
 return Reporter::report($query, $columns, $title, $meta, footer: true)->pdf();
+```
+You can decide to show generation date, total pages and page number in footer
+```php
+return Reporter::report($query, $columns, footer: true)->pdf();
+```
+You can put your logo in the header
+```php
+return Reporter::report($query, $columns, logo: 'https://address-to-logo.com')->pdf();
 ```
 ## TODO
 - [ ] Hopefully we'll add excel exports as well
