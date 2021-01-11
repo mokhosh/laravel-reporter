@@ -16,6 +16,9 @@ composer require mokhosh/laravel-reporter
 php artisan reporter:install
 ```
 
+You shouldn't need to do anything else on your client. But on some servers you might need more dependencies. For example on Ubuntu you can run `ldd chrome | grep not` and it will give you a list of dependencies that Headless Chrome needs to run but you don't have. Then you can install them by running `apt install`. Here's a guide to help you with that:
+https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
 ## Usage
 This is the simplest way to get a PDF. This will report all non-hidden columns:
 
