@@ -2,7 +2,6 @@
 
 namespace Mokhosh\Reporter\Tests;
 
-use Barryvdh\Snappy\ServiceProvider;
 use Illuminate\Foundation\Auth\User as BaseUser;
 use Mokhosh\Reporter\ReporterServiceProvider;
 use Orchestra\Testbench\TestCase;
@@ -20,7 +19,6 @@ abstract class BaseTest extends TestCase
     {
         return [
             ReporterServiceProvider::class,
-            ServiceProvider::class,
         ];
     }
 }

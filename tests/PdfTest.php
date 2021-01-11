@@ -2,29 +2,11 @@
 
 namespace Mokhosh\Reporter\Tests;
 
-use Barryvdh\Snappy\ServiceProvider;
 use Mokhosh\Reporter\Reporter;
-use Mokhosh\Reporter\ReporterServiceProvider;
 use Mokhosh\Reporter\Services\PdfService;
-use Orchestra\Testbench\TestCase;
 
-class PdfTest extends TestCase
+class PdfTest extends BaseTest
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadLaravelMigrations();
-    }
-
-    protected function getPackageProviders($app): array
-    {
-        return [
-            ReporterServiceProvider::class,
-            ServiceProvider::class,
-        ];
-    }
-
     /** @test */
     public function it_will_send_download_response_with_download()
     {
