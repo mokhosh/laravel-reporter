@@ -95,4 +95,62 @@ class HtmlTest extends BaseTest
         $this->assertStringContainsString('<img', $html);
         $this->assertStringContainsString('google.com/images', $html);
     }
+
+    /** @test */
+    public function it_passes_the_whole_model()
+    {
+        $user = User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
+
+        $filter = [
+            'email' => [
+                'transform' => fn($email, $model) => $model->name,
+            ],
+        ];
+
+        $columns = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $expected = [
+            0 => (object) [
+                "class" => "",
+                "title" => "Mo Khosh",
+            ],
+        ];
+
+        $actual = (new Row($user, $columns, isEven: false))->formattedRow();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /** @test */
+    public function it_can_handle_madeup_columns()
+    {
+        $user = User::create([
+            'name' => 'Mo Khosh',
+            'email' => 'mskhoshnazar@gmail.com',
+            'password' => 'password',
+        ]);
+
+        $filter = [
+            'something' => [
+                'transform' => fn($_, $model) => $model->name,
+            ],
+        ];
+
+        $columns = Reporter::report(User::query(), columns: $filter)->getColumns();
+
+        $expected = [
+            0 => (object) [
+                "class" => "",
+                "title" => "Mo Khosh",
+            ],
+        ];
+
+        $actual = (new Row($user, $columns, isEven: false))->formattedRow();
+
+        $this->assertEquals($expected, $actual);
+    }
 }
