@@ -31,7 +31,8 @@ If you prefer to download the PDF file instead of showing it in the browser you 
 return Reporter::report($users)->download()->pdf(); // download, aka attachment
 ```
 ### Styles and Transforms
-You can filter the columns like this
+If you don't pass a filter, `Reporter` will use your database columns to create its table.
+But if you use a filter, you can use any `accessor` on your model, and you can filter out some columns like this
 ```php
 $filter = [
     'id',
@@ -79,6 +80,20 @@ $filter = [
     ],
 ];
 ````
+The whole `model` is also passed to the `transform` closure, so you can access other columns if needed:
+```php
+$filter = [
+    'amount' => fn($amount, $model) => $model->currency . $amount,
+];
+```
+With this you can even create made-up columns that don't exist on your model and in your database:
+```php
+$filter = [
+    'madeup_name' => fn($_, $model) => $model->amount * $model->discount,
+];
+```
+Note that because this column does not really exist as a column database or even an accessor on your model, the first argument will be `null`. That's why I've named it `$_`.
+
 You can also change the Title of the generated pdf and add metadata
 ```php
 $title = 'Users Report';
