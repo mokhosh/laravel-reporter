@@ -33,6 +33,10 @@ If you prefer to download the PDF file instead of showing it in the browser you 
 ```php
 return Reporter::report($users)->download()->pdf(); // download, aka attachment
 ```
+You can download the Excel version of your report:
+```php
+return Reporter::report($users)->excel();
+```
 ### Styles and Transforms
 If you don't pass a filter, `Reporter` will use your database columns to create its table.
 But if you use a filter, you can use any `accessor` on your model, and you can filter out some columns like this
@@ -115,10 +119,6 @@ You can put your logo in the header
 return Reporter::report($query, $columns, logo: 'https://address-to-logo.com')->pdf();
 ```
 ## TODO
-- [ ] Hopefully we'll add excel exports as well
-```php
-return Reporter::report($users)->excel();
-```
 - [ ] I'm thinking of adding header classes
 ```php
 $filter = [
