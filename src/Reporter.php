@@ -4,12 +4,14 @@ namespace Mokhosh\Reporter;
 
 use Closure;
 use Exception;
+use Illuminate\Contracts\View\View as Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
 use Mokhosh\Reporter\Services\PdfService;
+use Mokhosh\Reporter\Services\ExcelService;
 
 class Reporter
 {
@@ -35,6 +37,12 @@ class Reporter
     {
         $service = new PdfService(html: $this->getHtml(), filename: $this->getFileName(), options: $this->getOptions());
         return $this->download ? $service->download() : $service->inline();
+    }
+
+    public function excel()
+    {
+        $service = new ExcelService(view: $this->getView(), filename: $this->getFileName());
+        return $service->download();
     }
 
     public function download($download = true): static
@@ -86,7 +94,7 @@ class Reporter
         return $this->meta;
     }
 
-    public function getHtml(): string
+    public function getView(): Renderable
     {
         return View::make('laravel-reporter::pdf', [
             'query' => $this->query,
@@ -95,7 +103,12 @@ class Reporter
             'meta' => $this->meta,
             'logo' => $this->logo,
             'header' => $this->header,
-        ])->render();
+        ]);
+    }
+
+    public function getHtml(): string
+    {
+        return $this->getView()->render();
     }
 
     protected function getTitleFromColumnName(string $value): string
