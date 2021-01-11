@@ -92,7 +92,7 @@ $filter = [
     'madeup_name' => fn($_, $model) => $model->amount * $model->discount,
 ];
 ```
-Note that because this column does not really exist as a column database or even an accessor on your model, the first argument will be `null`. That's why I've named it `$_`.
+Note that because this column does not really exist as a database column or even an accessor on your model, the first argument will be `null`. That's why I've named it `$_`.
 
 You can also change the Title of the generated pdf and add metadata
 ```php
