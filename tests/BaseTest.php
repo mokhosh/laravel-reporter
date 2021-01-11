@@ -4,6 +4,7 @@ namespace Mokhosh\Reporter\Tests;
 
 use Illuminate\Foundation\Auth\User as BaseUser;
 use Mokhosh\Reporter\ReporterServiceProvider;
+use Maatwebsite\Excel\ExcelServiceProvider;
 use Orchestra\Testbench\TestCase;
 
 abstract class BaseTest extends TestCase
@@ -19,6 +20,7 @@ abstract class BaseTest extends TestCase
     {
         return [
             ReporterServiceProvider::class,
+            ExcelServiceProvider::class,
         ];
     }
 }

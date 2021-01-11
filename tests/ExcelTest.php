@@ -5,10 +5,12 @@ namespace Mokhosh\Reporter\Tests;
 
 
 use Mokhosh\Reporter\Reporter;
+use Illuminate\Support\Facades\View;
+use Mokhosh\Reporter\Services\ExcelService;
 
 class ExcelTest extends BaseTest
 {
-/** @test */
+    /** @test */
     public function it_will_send_download_response_with_or_without_download()
     {
         User::create([
@@ -43,7 +45,7 @@ class ExcelTest extends BaseTest
     /** @test */
     public function it_will_name_files_with_correct_extension()
     {
-        $service = new ExcelService(html: '<div></div>', filename: 'some-file-name');
+        $service = new ExcelService(view: View::make('laravel-reporter::pdf'), filename: 'some-file-name');
 
         $this->assertEquals('some-file-name.xlsx', $service->getFilename());
     }
