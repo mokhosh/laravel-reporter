@@ -26,7 +26,7 @@ class Row extends Component
                     ? $modifier['class']
                     : '',
                 'title' => is_array($modifier)
-                    ? $modifier['transform']($this->row->{$title})
+                    ? $modifier['transform']($this->row->{$title}, $this->row)
                     : $this->stringify($this->row->{$title}),
             ];
         }
