@@ -142,7 +142,7 @@ class Reporter
         $fileName = $this->title;
 
         foreach ($this->meta as $key => $value) {
-            $fileName = $fileName.' '. $key.' '.$value;
+            $fileName = $fileName.'-'.$key.'-'.$value;
         }
 
         return Str::kebab($fileName);
