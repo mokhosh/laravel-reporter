@@ -42,7 +42,7 @@ class Reporter
 
     public function excel()
     {
-        $service = new ExcelService(view: $this->getView(), filename: $this->getFileName(), formats: $this->formats);
+        $service = new ExcelService(view: $this->getView(), filename: $this->getFileName());
         return $service->download();
     }
 
@@ -68,6 +68,7 @@ class Reporter
                     $columns[$key]['title'] ??= $this->getTitleFromColumnName($key);
                     $columns[$key]['class'] ??= '';
                     $columns[$key]['transform'] ??= fn($a) => $a;
+                    $columns[$key]['format'] ??= '@';
                 }
             } else {
                 throw new Exception('Wrong set of columns');

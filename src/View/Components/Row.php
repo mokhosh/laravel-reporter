@@ -28,6 +28,9 @@ class Row extends Component
                 'title' => is_array($modifier)
                     ? $modifier['transform']($this->row->{$title}, $this->row)
                     : $this->stringify($this->row->{$title}),
+                'format' => is_array($modifier)
+                    ? $modifier['format']
+                    : '@',
             ];
         }
 

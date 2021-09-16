@@ -7,7 +7,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExcelService
@@ -15,7 +14,6 @@ class ExcelService
     public function __construct(
         protected View $view,
         protected string $filename,
-        protected array $formats = [],
         protected array $options = [],
     ) {
         $this->filename = $this->filename.'.xlsx';
@@ -23,7 +21,7 @@ class ExcelService
 
     public function createExcel(): ExportView
     {
-        return new ExportView($this->view, $this->formats);
+        return new ExportView($this->view);
     }
 
     public function download(): BinaryFileResponse
@@ -37,13 +35,9 @@ class ExcelService
     }
 }
 
-class ExportView implements FromView, WithColumnFormatting, ShouldAutoSize
+class ExportView implements FromView, ShouldAutoSize
 {
     use Exportable;
-    public function __construct(
-        private View $view,
-        private array $formats,
-    ) {}
+    public function __construct(private View $view) {}
     public function view(): View {return $this->view;}
-    public function columnFormats(): array{return $this->formats;}
 }
