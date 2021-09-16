@@ -6,6 +6,8 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExcelService
@@ -35,7 +37,7 @@ class ExcelService
     }
 }
 
-class ExportView implements FromView
+class ExportView implements FromView, WithColumnFormatting, ShouldAutoSize
 {
     use Exportable;
     public function __construct(
