@@ -7,6 +7,10 @@ This is basically going to be a wrapper for an Excel generator and a Pdf generat
 
 There is already a package that does this, but I didn't like the API, the coding style and the overall design, with all due respect of course.
 
+## Requirements
+
+This package requires PHP 8.
+
 ## Installation
 
 You can install the package via composer. Make sure to run the Artisan install command to install npm dependencies.
