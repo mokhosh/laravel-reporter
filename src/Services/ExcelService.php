@@ -13,6 +13,7 @@ class ExcelService
     public function __construct(
         protected View $view,
         protected string $filename,
+        protected array $formats = [],
         protected array $options = [],
     ) {
         $this->filename = $this->filename.'.xlsx';
@@ -20,7 +21,7 @@ class ExcelService
 
     public function createExcel(): ExportView
     {
-        return new ExportView($this->view);
+        return new ExportView($this->view, $this->formats);
     }
 
     public function download(): BinaryFileResponse
@@ -37,6 +38,10 @@ class ExcelService
 class ExportView implements FromView
 {
     use Exportable;
-    public function __construct(private View $view) {}
+    public function __construct(
+        private View $view,
+        private array $formats,
+    ) {}
     public function view(): View {return $this->view;}
+    public function columnFormats(): array{return $this->formats;}
 }
