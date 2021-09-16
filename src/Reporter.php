@@ -25,6 +25,7 @@ class Reporter
         protected bool $header = true,
         protected bool $footer = false,
         protected bool $download = false,
+        protected array $formats = [],
     ) {}
 
     #[Pure]
@@ -41,7 +42,7 @@ class Reporter
 
     public function excel()
     {
-        $service = new ExcelService(view: $this->getView(), filename: $this->getFileName());
+        $service = new ExcelService(view: $this->getView(), filename: $this->getFileName(), formats: $this->formats);
         return $service->download();
     }
 
