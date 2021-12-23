@@ -33,7 +33,7 @@ class ExcelService
     public function queueExport()
     {
         dispatch(function () {
-            Excel::store($this->createExcel(), 'temp-exports/'.$this->filename);
+            Excel::queue($this->createExcel(), 'temp-exports/'.$this->filename);
             (new ExportSaved('temp-exports/'.$this->filename))->dispatch();
         });
     }
