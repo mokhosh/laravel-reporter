@@ -46,6 +46,12 @@ class Reporter
         return $service->download();
     }
 
+    public function queueExcel()
+    {
+        $service = new ExcelService(view: $this->getView(), filename: $this->getFileName());
+        $service->queueExport();
+    }
+
     public function download($download = true): static
     {
         $this->download = $download;
