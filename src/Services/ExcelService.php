@@ -7,7 +7,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Mokhosh\Reporter\Events\ExportSaved;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExcelService
@@ -28,15 +27,6 @@ class ExcelService
     public function download(): BinaryFileResponse
     {
         return Excel::download($this->createExcel(), $this->filename);
-    }
-
-    public function queueExport()
-    {
-        $filename = 'temp-exports/'.$this->filename;
-        $view = $this->createExcel();
-        Excel::queue($view, $filename)->chain([
-            new ExportSaved($filename),
-        ]);
     }
 
     public function getFilename(): string
